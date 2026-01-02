@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 
-export default function ProfileMenu({ setView, user }) {
+export default function ProfileMenu({ setView, goHome, user }) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef(null);
 
@@ -21,6 +21,12 @@ export default function ProfileMenu({ setView, user }) {
         setView(view);
         setIsOpen(false);
     };
+
+    const handleHome = () => {
+        if (goHome) goHome();
+        else setView('dashboard');
+        setIsOpen(false);
+    }
 
     const handleLogout = () => {
         signOut(auth);
@@ -45,12 +51,12 @@ export default function ProfileMenu({ setView, user }) {
                         <span>{user.email}</span>
                     </div>
                     <div className="dropdown-divider"></div>
-                    <button onClick={() => handleAction('dashboard')}>🏠 Home</button>
-                    <button onClick={() => handleAction('saved')}>💾 Saved Dashboards</button>
-                    <button onClick={() => handleAction('history')}>📜 Upload History</button>
-                    <button onClick={() => handleAction('settings')}>⚙️ Settings</button>
+                    <button onClick={handleHome}>Home</button>
+                    <button onClick={() => handleAction('saved')}>Saved Dashboards</button>
+                    <button onClick={() => handleAction('history')}>Upload History</button>
+                    <button onClick={() => handleAction('settings')}>Settings</button>
                     <div className="dropdown-divider"></div>
-                    <button onClick={handleLogout} className="text-danger">🚪 Logout</button>
+                    <button onClick={handleLogout} className="text-danger">Logout</button>
                 </div>
             )}
         </div>

@@ -173,25 +173,42 @@ export default function FileUpload({ setData, onUpload }) {
             <div
                 className={`upload-box ${dragActive ? "drag-active" : ""}`}
                 onDragEnter={handleDrag}
-                onDragLeave={handleDrag} // Fixed event
+                onDragLeave={handleDrag}
                 onDragOver={handleDrag}
                 onDrop={handleDrop}
             >
-                <label htmlFor="file-upload" className="upload-label">
-                    {loading ? "Processing..." : "Select Data File (CSV / Excel / PDF)"}
-                </label>
+                {/* Replaced H2 with Icon driven layout */}
+                <div style={{ marginBottom: '1rem', color: 'var(--primary-color)', display: 'flex', justifyContent: 'center' }}>
+                    {/* We can use an SVG or Lucide icon passed as prop, but let's just use a generic SVG here or text icon if we don't import lucide in this file */}
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                </div>
+
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', margin: '0 0 0.5rem 0' }}>
+                    Click to upload or drag & drop
+                </h3>
+
+                <p className="upload-hint" style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                    CSV, Excel supported
+                </p>
+
+                {/* Hidden Input */}
                 <input
                     id="file-upload"
                     type="file"
                     accept=".csv, .xlsx, .xls, .pdf"
                     onChange={e => handleFile(e.target.files[0])}
                     className="file-input"
+                    style={{ display: 'none' }}
                 />
-                <p className="upload-hint">
-                    Drag and drop your file here or click to browse
-                    <br />
-                    Supported formats: .csv, .xlsx, .pdf (simple tables)
-                </p>
+                {/* Label is the whole box effectively due to click handler on input usually, but we need to trigger it. 
+                     Actually the previous code had a label around it or inside. 
+                     Let's make the whole box clickable by wrapping content in label or handling click.
+                 */}
+                <label htmlFor="file-upload" className="upload-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', cursor: 'pointer' }}></label>
             </div>
         </div>
     );

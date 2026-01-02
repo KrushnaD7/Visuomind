@@ -28,8 +28,8 @@ export default function SavedDashboards({ onLoad, onBack, type }) {
     return (
         <div className="history-container">
             <div className="history-header">
-                <button className="btn-back" onClick={onBack}>← Back</button>
-                <h2>{isHistory ? "📜 Upload History" : "💾 Saved Dashboards"}</h2>
+                <button className="btn-back" onClick={onBack}>Back</button>
+                <h2>{isHistory ? "Upload History" : "Saved Dashboards"}</h2>
             </div>
 
             {(!snapshot || snapshot.empty) ? (
@@ -44,7 +44,6 @@ export default function SavedDashboards({ onLoad, onBack, type }) {
 
                         return (
                             <div key={doc.id} className="history-card" onClick={() => onLoad(data.data)}>
-                                <div className="history-icon">{isHistory ? "🕒" : "⭐"}</div>
                                 <div className="history-info">
                                     <h3>{data.name || "Untitled"}</h3>
                                     <p>{date}</p>
@@ -54,7 +53,7 @@ export default function SavedDashboards({ onLoad, onBack, type }) {
                                     onClick={(e) => handleDelete(e, doc.id)}
                                     title="Delete"
                                 >
-                                    🗑️
+                                    Delete
                                 </button>
                             </div>
                         );
